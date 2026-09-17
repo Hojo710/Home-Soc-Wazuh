@@ -6,7 +6,7 @@ This project documents the design and implementation of a virtualized Security O
 
 The lab was built to develop hands-on experience with SIEM monitoring, endpoint telemetry, threat detection, alert triage, incident investigation, and detection engineering.
 
-Controlled security events were generated from both Windows and Kali Linux systems and investigated through Wazuh. The project includes PowerShell execution analysis, network reconnaissance using Nmap, Windows Firewall telemetry analysis, custom Wazuh detection rules, false-positive identification, rule tuning, and detection validation.
+Controlled security events were generated from both Windows and Kali Linux systems and investigated through Wazuh. The project includes PowerShell execution analysis, network reconnaissance using Nmap, Windows Firewall telemetry analysis, custom Wazuh detection rules, false-analysis identification, rule tuning, and detection validation.
 
 ## Table of Contents
 
@@ -20,6 +20,7 @@ Controlled security events were generated from both Windows and Kali Linux syste
 - [Detection Tuning](#detection-tuning)
 - [Skills Demonstrated](#skills-demonstrated)
 - [Project Outcomes](#project-outcomes)
+- [Conclusion](#conclusion)
 
 ## Lab Objectives
 
@@ -41,7 +42,7 @@ The SOC lab was built in Oracle VirtualBox using three virtual machines connecte
 | System | Operating System | Purpose | Lab IP |
 |---|---|---|---|
 | Wazuh-SOC-Server | Ubuntu Server 24.04 LTS | Wazuh manager, indexer, and dashboard | 192.168.1.151 |
-| Windows-SOC-Endpoint | Windows 11 Pro | Monitored endpoint with Wazuh Agent, Sysmon, and Windows Firewall logging | 192.168.1.156 |
+| Windows-SOC-Endpoint | Windows 11 Pro | Monitored endpoint with Wazuh agent, Sysmon, and Windows Firewall logging | 192.168.1.156 |
 | Kali-SOC | Kali Linux | Authorized adversary simulation and network reconnaissance | 192.168.1.158 |
 ### Data Flow
 
@@ -69,7 +70,7 @@ Wazuh Dashboard / Threat Hunting
 
 | Technology | Use in Lab |
 |---|---|
-| Wazuh 4.14 | SIEM management, log analysis, alerting, and Threat Hunting |
+| Wazuh 4.14.7 | SIEM management, log analysis, alerting, and Threat Hunting |
 | Sysmon | Windows process-creation and endpoint telemetry |
 | Windows 11 Pro | Monitored SOC endpoint |
 | Windows Firewall | Network connection filtering and firewall telemetry |
@@ -312,3 +313,13 @@ Key outcomes included:
 - Developed correlation Rule 100003 to identify repeated TCP firewall drops from the same source IP and validated the rule using `wazuh-logtest`.
 - Identified false positives caused by unrelated UDP multicast traffic and refined the detection logic to focus on relevant TCP activity.
 - Documented investigation evidence, analyst conclusions, detection logic, and validation results in a GitHub portfolio.
+
+## Conclusion
+
+This Home SOC project demonstrates the implementation of a complete security monitoring and detection workflow using Wazuh, Sysmon, Windows Firewall telemetry, and Kali Linux.
+
+The lab progressed beyond basic SIEM deployment by incorporating alert investigation, MITRE ATT&CK mapping, network reconnaissance analysis, custom detection-rule development, false-positive analysis, rule tuning, and validation.
+
+Through the two documented investigations, the environment demonstrated the ability to collect security telemetry, identify suspicious activity, analyze supporting evidence, develop and refine detections, and document analyst conclusions in a repeatable SOC-style workflow.
+
+The project provided practical experience applying concepts associated with SIEM operations, endpoint monitoring, threat detection, incident investigation, and detection engineering in an authorized lab environment.
