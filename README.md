@@ -105,6 +105,26 @@ No additional malicious activity associated with the test was identified during 
 **Benign True Positive — Authorized Simulation**
 
 The alert correctly identified the PowerShell activity. However, the activity was intentionally generated as part of the authorized Home SOC lab and required no containment or remediation.
+
+### Evidence
+
+#### Wazuh PowerShell Alert
+
+![Wazuh PowerShell alert showing Rule 92027](screenshots/investigation-01-powershell/wazuh-powershell-alert.png)
+
+*Wazuh Threat Hunting identified PowerShell activity on SOC-ENDPOINT using Rule 92027.*
+
+#### PowerShell Process Details
+
+![PowerShell process details captured by Sysmon](screenshots/investigation-01-powershell/powershell-process-details.png)
+
+*Sysmon process-creation telemetry showing the PowerShell executable, command line, user context, and integrity level.*
+
+#### Detection and MITRE ATT&CK Mapping
+
+![Wazuh PowerShell detection and MITRE ATT&CK mapping](screenshots/investigation-01-powershell/wazuh-powershell-detection.png)
+
+*Wazuh alert details showing Sysmon Event ID 1, Rule 92027, and MITRE ATT&CK T1059.001 — PowerShell.*
 ## Investigation 02 — Network Reconnaissance & Detection Engineering
 
 ### Objective
