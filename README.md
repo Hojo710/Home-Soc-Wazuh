@@ -8,6 +8,19 @@ The lab was built to develop hands-on experience with SIEM monitoring, endpoint 
 
 Controlled security events were generated from both Windows and Kali Linux systems and investigated through Wazuh. The project includes PowerShell execution analysis, network reconnaissance using Nmap, Windows Firewall telemetry analysis, custom Wazuh detection rules, false-positive identification, rule tuning, and detection validation.
 
+## Table of Contents
+
+- [Lab Objectives](#lab-objectives)
+- [Lab Architecture](#lab-architecture)
+- [Data Flow](#data-flow)
+- [Technologies & Tools](#technologies--tools)
+- [Investigation 01 — PowerShell Execution](#investigation-01--powershell-execution)
+- [Investigation 02 — Network Reconnaissance & Detection Engineering](#investigation-02--network-reconnaissance--detection-engineering)
+- [Custom Detection Rules](#custom-detection-rules)
+- [Detection Tuning](#detection-tuning)
+- [Skills Demonstrated](#skills-demonstrated)
+- [Project Outcomes](#project-outcomes)
+
 ## Lab Objectives
 
 - Deploy and configure a Wazuh SIEM server
