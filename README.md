@@ -185,3 +185,29 @@ No successful connection or evidence of compromise was identified during the tes
 ### Disposition
 
 **Benign True Positive — Authorized Reconnaissance Simulation**
+
+### Evidence
+
+#### Kali Nmap SYN Scan
+
+![Kali Nmap SYN scan against SOC-ENDPOINT](screenshots/investigation-02-network-scan/kali-nmap-syn-scan.png)
+
+*Authorized TCP SYN reconnaissance from Kali-SOC against Windows-SOC-Endpoint. Nmap reported all 1,000 scanned TCP ports as filtered/no-response.*
+
+#### Wazuh TCP Drop Detection
+
+![Wazuh TCP firewall drop results](screenshots/investigation-02-network-scan/wazuh-tcp-drop-results.png)
+
+*Wazuh Threat Hunting showing TCP firewall-drop events from Kali-SOC (`192.168.1.158`) detected by custom Rule 100002.*
+
+#### Firewall Event Details
+
+![Wazuh Windows Firewall TCP drop event details](screenshots/investigation-02-network-scan/wazuh-tcp-firewall-drop.png)
+
+*Windows Firewall telemetry showing TCP traffic from `192.168.1.158` to `192.168.1.156` blocked with action DROP and detected by Rule 100002.*
+
+#### Correlation Rule Validation
+
+![Wazuh Rule 100003 correlation validation using wazuh-logtest](screenshots/investigation-02-network-scan/wazuh-rule-100003-logtest.png)
+
+*Rule 100003 validated with `wazuh-logtest`, generating a Level 10 alert after the configured threshold of eight repeated TCP firewall drops.*
