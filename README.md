@@ -271,3 +271,31 @@ The detection was refined by separating the logic into two stages:
 2. Rule 100003 correlates repeated Rule 100002 events from the same source IP.
 
 This tuning reduced unrelated UDP traffic from the correlation logic and demonstrated an iterative detection-engineering workflow: **observe → analyze → tune → validate**.
+
+## Skills Demonstrated
+
+- SIEM deployment, configuration, and monitoring with Wazuh
+- Windows endpoint monitoring using the Wazuh Agent
+- Sysmon process-creation telemetry collection and analysis
+- Windows Firewall log collection and network-event investigation
+- Threat Hunting and alert investigation in Wazuh
+- PowerShell activity analysis and MITRE ATT&CK mapping
+- Network reconnaissance using Nmap in an authorized lab environment
+- Custom Wazuh rule development and validation
+- Correlation-rule testing using `wazuh-logtest`
+- False-positive analysis and detection tuning
+- SOC-style alert triage, investigation, and documentation
+## Project Outcomes
+
+This project resulted in a functional virtual Home SOC capable of collecting endpoint and network telemetry, detecting controlled security activity, and supporting analyst investigation through Wazuh.
+
+Key outcomes included:
+
+- Successfully deployed a Wazuh SIEM environment with a monitored Windows endpoint.
+- Integrated Sysmon and Windows Firewall telemetry into Wazuh.
+- Investigated PowerShell execution detected by Wazuh and mapped the activity to MITRE ATT&CK T1059.001 — PowerShell.
+- Generated authorized TCP SYN reconnaissance from Kali Linux and analyzed the resulting Windows Firewall DROP events.
+- Developed custom Rule 100002 to identify TCP firewall drops and confirmed the rule against live Wazuh telemetry.
+- Developed correlation Rule 100003 to identify repeated TCP firewall drops from the same source IP and validated the rule using `wazuh-logtest`.
+- Identified false positives caused by unrelated UDP multicast traffic and refined the detection logic to focus on relevant TCP activity.
+- Documented investigation evidence, analyst conclusions, detection logic, and validation results in a GitHub portfolio.
