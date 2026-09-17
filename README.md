@@ -52,6 +52,21 @@ Wazuh-SOC-Server
 Wazuh Dashboard / Threat Hunting
 ```
 
+## Technologies & Tools
+
+| Technology | Use in Lab |
+|---|---|
+| Wazuh 4.14 | SIEM management, log analysis, alerting, and Threat Hunting |
+| Sysmon | Windows process-creation and endpoint telemetry |
+| Windows 11 Pro | Monitored SOC endpoint |
+| Windows Firewall | Network connection filtering and firewall telemetry |
+| Kali Linux | Authorized adversary simulation and network reconnaissance |
+| Nmap | TCP SYN reconnaissance and controlled network testing |
+| Ubuntu Server 24.04 LTS | Wazuh server operating system |
+| Oracle VirtualBox | Virtualized lab infrastructure |
+| MITRE ATT&CK | Technique classification and detection mapping |
+| GitHub | Investigation documentation and portfolio presentation |
+
 ## Investigation 01 — PowerShell Execution
 
 ### Objective
@@ -210,4 +225,49 @@ No successful connection or evidence of compromise was identified during the tes
 
 ![Wazuh Rule 100003 correlation validation using wazuh-logtest](screenshots/investigation-02-network-scan/wazuh-rule-100003-logtest.png)
 
-*Rule 100003 validated with `wazuh-logtest`, generating a Level 10 alert after the configured threshold of eight repeated TCP firewall drops.*
+## Custom Detection Rules
+
+As part of the detection-engineering portion of the lab, custom Wazuh rules were developed to improve visibility into network reconnaissance activity observed through Windows Firewall telemetry.
+
+### Rule 100002 — Windows Firewall TCP Drop
+
+Rule 100002 identifies individual TCP connection attempts blocked by Windows Firewall.
+
+```xml
+<rule id="100002" level="5">
+    <if_sid>4101</if_sid>
+    <protocol>TCP</protocol>
+    <description>Windows Firewall TCP drop</description>
+    <group>network_scan,reconnaissance,</group>
+</rule>
+```
+
+This rule was successfully observed in live Wazuh telemetry during authorized Nmap reconnaissance from `Kali-SOC`.
+
+### Rule 100003 — Repeated TCP Firewall Drops
+
+Rule 100003 correlates repeated Rule 100002 events from the same source IP within a defined time window.
+
+```xml
+<rule id="100003" level="10" frequency="8" timeframe="60">
+    <if_matched_sid>100002</if_matched_sid>
+    <same_srcip />
+    <description>Possible port scan: repeated TCP firewall drops from same source IP</description>
+    <group>network_scan,reconnaissance,</group>
+</rule>
+```
+
+The rule is configured to generate a Level 10 alert when eight matching TCP firewall-drop events from the same source IP occur within 60 seconds.
+
+Rule 100003 was successfully validated using `wazuh-logtest`. It was not observed firing in the live Threat Hunting index during final validation, so the project does not represent it as a live SIEM alert.
+
+### Detection Tuning
+
+Initial correlation testing produced false positives from unrelated UDP multicast traffic. Analysis of those events showed that the original correlation logic was too broad.
+
+The detection was refined by separating the logic into two stages:
+
+1. Rule 100002 filters Windows Firewall events to TCP traffic.
+2. Rule 100003 correlates repeated Rule 100002 events from the same source IP.
+
+This tuning reduced unrelated UDP traffic from the correlation logic and demonstrated an iterative detection-engineering workflow: **observe → analyze → tune → validate**.
